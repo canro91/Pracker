@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pracker", "Pracker\Pracker.csproj", "{77005280-F71C-4EC9-8A73-75D0094E6B4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pracker.Tests", "Pracker.Tests\Pracker.Tests.csproj", "{DE59A9B3-FB9A-4116-9DFB-5C96FC3EDC02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77005280-F71C-4EC9-8A73-75D0094E6B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77005280-F71C-4EC9-8A73-75D0094E6B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77005280-F71C-4EC9-8A73-75D0094E6B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77005280-F71C-4EC9-8A73-75D0094E6B4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE59A9B3-FB9A-4116-9DFB-5C96FC3EDC02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE59A9B3-FB9A-4116-9DFB-5C96FC3EDC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE59A9B3-FB9A-4116-9DFB-5C96FC3EDC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE59A9B3-FB9A-4116-9DFB-5C96FC3EDC02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EAA8369C-CFD9-4A40-9C49-454A0D0B65E6}
+	EndGlobalSection
+EndGlobal
