@@ -72,7 +72,74 @@ namespace Pracker.Tests
             StringAssert.Contains("After", change);
         }
 
-        // Only track changes
-        // Track single property change
+        [Test]
+        public void Track_DifferentValue_OnlyTracksChange()
+        {
+            var user = new User
+            {
+                FirstName = "Before"
+            };
+            var userWithTracker = new AuditLogTracker<User>(user);
+            userWithTracker.Track(u => u.FirstName, "After");
+
+            var allChanges = userWithTracker.DisplayChanges();
+
+            Assert.AreEqual("Before", user.FirstName);
+
+            var change = allChanges.First();
+            StringAssert.Contains("Before", change);
+            StringAssert.Contains("After", change);
+        }
+
+        [Test]
+        public void Track_SameValue_DoesNotTrackChange()
+        {
+            var user = new User
+            {
+                FirstName = "Before"
+            };
+            var userWithTracker = new AuditLogTracker<User>(user);
+            userWithTracker.Track(u => u.FirstName, user.FirstName);
+
+            var allChanges = userWithTracker.DisplayChanges();
+
+            Assert.IsFalse(allChanges.Any());
+        }
+
+        [Test]
+        public void Track_PreviousValueNull_OnlyTracksChange()
+        {
+            var user = new User
+            {
+                FirstName = null
+            };
+            var userWithTracker = new AuditLogTracker<User>(user);
+            userWithTracker.Track(u => u.FirstName, "After");
+
+            var allChanges = userWithTracker.DisplayChanges();
+
+            Assert.IsNull(user.FirstName);
+
+            var change = allChanges.First();
+            StringAssert.Contains("After", change);
+        }
+
+        [Test]
+        public void Track_NewValueNull_OnlyTracksChange()
+        {
+            var user = new User
+            {
+                FirstName = "Before"
+            };
+            var userWithTracker = new AuditLogTracker<User>(user);
+            userWithTracker.Track(u => u.FirstName, null);
+
+            var allChanges = userWithTracker.DisplayChanges();
+
+            Assert.AreEqual("Before", user.FirstName);
+
+            var change = allChanges.First();
+            StringAssert.Contains("Before", change);
+        }
     }
 }

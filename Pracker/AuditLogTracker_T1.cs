@@ -32,7 +32,7 @@ namespace Pracker
             var newValue = changed.GetValue(_classWithChanges);
             if (!Equals(oldValue, newValue))
             {
-                _auditLog.OnChanges(propertyName, newValue);
+                _auditLog.OnChanged(propertyName, newValue);
             }
         }
 

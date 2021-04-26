@@ -50,7 +50,7 @@ namespace Pracker
             }
         }
 
-        public void OnChanges(string propertyName, object newValue)
+        public void OnChanged(string propertyName, object newValue)
         {
             if (_currentState.ContainsKey(propertyName))
             {
