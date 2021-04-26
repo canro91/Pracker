@@ -26,7 +26,7 @@ namespace Pracker.Tests
         {
             var user = new User
             {
-                FirstName = "Before",
+                FirstName = "Before"
             };
             var userWithTracker = new AuditLogTracker<User>(user);
             userWithTracker.UpdateAndTrack(u => u.FirstName, "After");
@@ -37,5 +37,42 @@ namespace Pracker.Tests
             StringAssert.Contains("Before", change);
             StringAssert.Contains("After", change);
         }
+
+        [Test]
+        public void Track_NullAsNewValue_StoresKeywordInsteadOfNull()
+        {
+            var user = new User
+            {
+                FirstName = "Before"
+            };
+            var userWithTracker = new AuditLogTracker<User>(user, onNullValue: "null");
+            userWithTracker.UpdateAndTrack(u => u.FirstName, null);
+
+            var allChanges = userWithTracker.DisplayChanges();
+
+            var change = allChanges.First();
+            StringAssert.Contains("Before", change);
+            StringAssert.Contains("null", change);
+        }
+
+        [Test]
+        public void Track_NullAsPreviousValue_StoresKeywordInsteadOfNull()
+        {
+            var user = new User
+            {
+                FirstName = null
+            };
+            var userWithTracker = new AuditLogTracker<User>(user, onNullValue: "null");
+            userWithTracker.UpdateAndTrack(u => u.FirstName, "After");
+
+            var allChanges = userWithTracker.DisplayChanges();
+
+            var change = allChanges.First();
+            StringAssert.Contains("null", change);
+            StringAssert.Contains("After", change);
+        }
+
+        // Only track changes
+        // Track single property change
     }
 }

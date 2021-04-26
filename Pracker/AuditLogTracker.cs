@@ -10,10 +10,10 @@ namespace Pracker
         private readonly AuditLog<T> _auditLog;
         private readonly T _classToTrack;
 
-        public AuditLogTracker(T classToTrack)
+        public AuditLogTracker(T classToTrack, string onNullValue = null)
         {
             _classToTrack = classToTrack;
-            _auditLog = new AuditLog<T>(classToTrack);
+            _auditLog = new AuditLog<T>(classToTrack, onNullValue);
         }
 
         public void UpdateAndTrack<TValue>(Expression<Func<T, TValue>> property, TValue value)
