@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Pracker
 {
     public class AuditLogTracker<T1, T2> where T1 : class where T2 : class
     {
-        private readonly AuditLog<T1> _auditLog;
         private readonly T1 _classToTrack;
         private readonly T2 _classWithChanges;
+        private readonly AuditLog<T1> _auditLog;
 
         public AuditLogTracker(T1 classToTrack, T2 classWithChanges)
         {
@@ -36,9 +37,7 @@ namespace Pracker
             }
         }
 
-        public void DisplayChanges()
-        {
-            _auditLog.DisplayChanges();
-        }
+        public List<string> DisplayChanges()
+            => _auditLog.DisplayChanges();
     }
 }
