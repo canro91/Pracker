@@ -17,7 +17,7 @@ namespace Pracker
             _auditLog = new AuditLog<T1>(classToTrack);
         }
 
-        public void TrackIfChanged<TValue>(Expression<Func<T1, TValue>> propertyToTrack)
+        public void Track<TValue>(Expression<Func<T1, TValue>> propertyToTrack)
         {
             var expression = propertyToTrack.Body as MemberExpression;
             var propertyName = expression.Member.Name;

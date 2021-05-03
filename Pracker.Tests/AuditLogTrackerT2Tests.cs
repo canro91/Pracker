@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
 using Pracker.Tests.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Pracker.Tests
 {
@@ -22,7 +19,7 @@ namespace Pracker.Tests
                 FirstName = "After"
             };
             var userWithTracker = new AuditLogTracker<User, UserViewModel>(user, userViewModel);
-            userWithTracker.TrackIfChanged(u => u.FirstName);
+            userWithTracker.Track(u => u.FirstName);
 
             var allChanges = userWithTracker.DisplayChanges();
 
@@ -43,7 +40,7 @@ namespace Pracker.Tests
                 FirstName = user.FirstName
             };
             var userWithTracker = new AuditLogTracker<User, UserViewModel>(user, userViewModel);
-            userWithTracker.TrackIfChanged(u => u.FirstName);
+            userWithTracker.Track(u => u.FirstName);
 
             var allChanges = userWithTracker.DisplayChanges();
 
