@@ -47,7 +47,22 @@ namespace Pracker.Tests
             Assert.IsFalse(allChanges.Any());
         }
 
-        // Class2 doesn't have property
+        [Test]
+        public void Track_PropertyNotPresent_DoesNotStoreAnyValues()
+        {
+            var user = new User
+            {
+                FirstName = "Before"
+            };
+            var userViewModel = new UserWithoutFirstNameViewModel();
+            var userWithTracker = new AuditLogTracker<User, UserWithoutFirstNameViewModel>(user, userViewModel);
+            userWithTracker.Track(u => u.FirstName);
+
+            var allChanges = userWithTracker.DisplayChanges();
+
+            Assert.IsFalse(allChanges.Any());
+        }
+
         // Nulls on either side
         // TrackAll: More than one property changed
     }
