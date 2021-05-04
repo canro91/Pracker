@@ -63,7 +63,50 @@ namespace Pracker.Tests
             Assert.IsFalse(allChanges.Any());
         }
 
-        // Nulls on either side
+        [Test]
+        public void Track_NullOnClassToTrack_StorePreviousAndNewValue()
+        {
+            var user = new User
+            {
+                FirstName = null
+            };
+            var userViewModel = new UserViewModel
+            {
+                FirstName = "After"
+            };
+            var userWithTracker = new AuditLogTracker<User, UserViewModel>(user, userViewModel, onNullValue: "null");
+            userWithTracker.Track(u => u.FirstName);
+
+            var allChanges = userWithTracker.DisplayChanges();
+            Assert.AreEqual(1, allChanges.Count);
+
+            var change = allChanges.First();
+            StringAssert.Contains("null", change);
+            StringAssert.Contains("After", change);
+        }
+
+        [Test]
+        public void Track_NullOnClassWithChanges_StorePreviousAndNewValue()
+        {
+            var user = new User
+            {
+                FirstName = "Before"
+            };
+            var userViewModel = new UserViewModel
+            {
+                FirstName = null
+            };
+            var userWithTracker = new AuditLogTracker<User, UserViewModel>(user, userViewModel, onNullValue: "null");
+            userWithTracker.Track(u => u.FirstName);
+
+            var allChanges = userWithTracker.DisplayChanges();
+            Assert.AreEqual(1, allChanges.Count);
+
+            var change = allChanges.First();
+            StringAssert.Contains("Before", change);
+            StringAssert.Contains("null", change);
+        }
+
         // TrackAll: More than one property changed
     }
 }

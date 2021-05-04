@@ -57,7 +57,7 @@ namespace Pracker
                 var prevValue = _currentState[propertyName];
                 _currentState[propertyName] = newValue;
 
-                _changes.Add($"Field {propertyName}, original value: {prevValue ?? ""}, new value: {newValue}");
+                _changes.Add($"Field {propertyName}, original value: {prevValue ?? _onNullValue}, new value: {newValue ?? _onNullValue}");
             }
             else
             {
