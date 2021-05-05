@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Pracker
 {
@@ -15,6 +16,30 @@ namespace Pracker
             _classToTrack = classToTrack;
             _classWithChanges = classWithChanges;
             _auditLog = new AuditLog<T1>(classToTrack, onNullValue);
+        }
+
+        public void TrackAll()
+        {
+            var originalType = _classToTrack.GetType();
+            var updatedType = _classWithChanges.GetType();
+
+            var properties = originalType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            foreach (var property in properties)
+            {
+                var original = originalType.GetProperty(property.Name);
+                var updated = updatedType.GetProperty(property.Name);
+                if (original == null || updated == null)
+                {
+                    continue;
+                }
+
+                var oldValue = original.GetValue(_classToTrack);
+                var newValue = updated.GetValue(_classWithChanges);
+                if (!Equals(oldValue, newValue))
+                {
+                    _auditLog.OnChanged(property.Name, newValue);
+                }
+            }
         }
 
         public void Track<TValue>(Expression<Func<T1, TValue>> propertyToTrack)

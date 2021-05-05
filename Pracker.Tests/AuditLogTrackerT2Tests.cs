@@ -107,6 +107,76 @@ namespace Pracker.Tests
             StringAssert.Contains("null", change);
         }
 
-        // TrackAll: More than one property changed
+        [Test]
+        public void Track_MoreThanOnePropertyChanged_StorePreviousAndNewValue()
+        {
+            var user = new User
+            {
+                FirstName = "BeforeFirstName",
+                LastName = "BeforeLastName"
+            };
+            var userViewModel = new UserViewModel
+            {
+                FirstName = "AfterFirstName",
+                LastName = "AfterLastName"
+            };
+            var userWithTracker = new AuditLogTracker<User, UserViewModel>(user, userViewModel);
+            userWithTracker.TrackAll();
+
+            var allChanges = userWithTracker.DisplayChanges();
+            Assert.AreEqual(2, allChanges.Count);
+
+            var firstNameChange = allChanges.First();
+            StringAssert.Contains("BeforeFirstName", firstNameChange);
+            StringAssert.Contains("AfterFirstName", firstNameChange);
+
+            var lastNameChange = allChanges.Last();
+            StringAssert.Contains("BeforeLastName", lastNameChange);
+            StringAssert.Contains("AfterLastName", lastNameChange);
+        }
+
+        [Test]
+        public void Track_TwoPropertiesAndOnlyOneChanged_StorePreviousAndNewValue()
+        {
+            var user = new User
+            {
+                FirstName = "FirstName",
+                LastName = "BeforeLastName"
+            };
+            var userViewModel = new UserViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = "AfterLastName"
+            };
+            var userWithTracker = new AuditLogTracker<User, UserViewModel>(user, userViewModel);
+            userWithTracker.TrackAll();
+
+            var allChanges = userWithTracker.DisplayChanges();
+            Assert.AreEqual(1, allChanges.Count);
+
+            var lastNameChange = allChanges.First();
+            StringAssert.Contains("BeforeLastName", lastNameChange);
+            StringAssert.Contains("AfterLastName", lastNameChange);
+        }
+
+        [Test]
+        public void Track_NoPropertyOnOneSide_DoesNotStoreAnyValues()
+        {
+            var user = new User
+            {
+                FirstName = "FirstName",
+                LastName = "BeforeLastName"
+            };
+            var userViewModel = new UserWithoutLastNameViewModel
+            {
+                FirstName = user.FirstName
+            };
+            var userWithTracker = new AuditLogTracker<User, UserWithoutLastNameViewModel>(user, userViewModel);
+            userWithTracker.TrackAll();
+
+            var allChanges = userWithTracker.DisplayChanges();
+
+            Assert.IsFalse(allChanges.Any());
+        }
     }
 }
