@@ -1,6 +1,6 @@
 # Pracker
 
-![](https://img.shields.io/badge/netstandard-2.0-brightgreen.svg) ![](https://img.shields.io/github/license/canro91/Pracker)
+![](https://img.shields.io/badge/netstandard-2.0-brightgreen.svg) ![](https://github.com/canro91/Pracker/workflows/Build/badge.svg) ![](https://img.shields.io/github/license/canro91/Pracker)
 
 Pracker updates entities and keeps track of changes. Pracker keeps track of individual changes to class' properties and changes from a separate DTO, value object or view model. You can use Pracker to implement poor-man audit logs.
 
@@ -13,7 +13,7 @@ Use Pracker to update a single property of a class and keep track of what was ch
 ```csharp
 var user = new User
 {
-	FirstName = "Before"
+    FirstName = "Before"
 };
 var userWithTracker = new AuditLogTracker<User>(user);
 userWithTracker.UpdateAndTrack(u => u.FirstName, "After");
@@ -27,7 +27,7 @@ userWithTracker.DisplayChanges();
 ```csharp
 var user = new User
 {
-	FirstName = null
+    FirstName = null
 };
 var userWithTracker = new AuditLogTracker<User>(user, onNullValue: "***");
 userWithTracker.UpdateAndTrack(u => u.FirstName, "After");
@@ -46,7 +46,7 @@ Use Pracker to only track the value changed for a property.
 ```csharp
 var user = new User
 {
-	FirstName = "Before"
+    FirstName = "Before"
 };
 var userWithTracker = new AuditLogTracker<User>(user);
 userWithTracker.Track(u => u.FirstName, "After");
@@ -62,13 +62,13 @@ Use Pracker to track the changes from a separate class: DTO, view model. It will
 ```csharp
 var user = new User
 {
-	FirstName = "BeforeFirstName",
-	LastName = "BeforeLastName"
+    FirstName = "BeforeFirstName",
+    LastName = "BeforeLastName"
 };
 var userViewModel = new UserViewModel
 {
-	FirstName = "AfterFirstName",
-	LastName = "AfterLastName"
+    FirstName = "AfterFirstName",
+    LastName = "AfterLastName"
 };
 var userWithTracker = new AuditLogTracker<User, UserWithoutLastNameViewModel>(user, userViewModel);
 userWithTracker.TrackAll();
