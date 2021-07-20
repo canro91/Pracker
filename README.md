@@ -70,7 +70,7 @@ var userViewModel = new UserViewModel
     FirstName = "AfterFirstName",
     LastName = "AfterLastName"
 };
-var userWithTracker = new AuditLogTracker<User, UserWithoutLastNameViewModel>(user, userViewModel);
+var userWithTracker = new AuditLogTracker<User, UserViewModel>(user, userViewModel);
 userWithTracker.TrackAll();
 
 var allChanges = userWithTracker.DisplayChanges();
